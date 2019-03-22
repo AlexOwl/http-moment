@@ -45,9 +45,9 @@ function Mixin<T> (SuperClass) {
       if (!this.corked) return
       this.corked = false
 
-      await new Promise(setImmediate)
-
-      await Promise.all(this.socketsReady.map(socket => socket.uncorkLast()))
+      setImmediate(() =>
+        this.socketsReady.forEach(socket => socket.uncorkLast())
+      )
     }
 
     protected createConnection (port: any, host: any, options: any) {
