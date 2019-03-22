@@ -13,7 +13,7 @@
     "email": "AlexOwl@protonmail.com",
     "url": "https://github.com/AlexOwl/http-moment/issues"
   },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "lib/index.js",
   "files": [
     "lib"
