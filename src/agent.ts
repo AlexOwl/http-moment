@@ -23,27 +23,23 @@ function Mixin<T> (SuperClass) {
       })
     }
 
-    public async cork (count = 0) {
+    public cork (count = 0) {
       if (this.corked) return
-      this.corked = true
+      this.corked = true // must be sync
 
       if (count < 1) return
 
-      await new Promise(resolve => {
-        const handler = () => {
-          if (this.socketsReady.length < count) return
-          this.emitter.off('socketReady', handler)
-          resolve()
-        }
-        this.emitter.on('socketReady', handler)
-      })
-
-      await this.uncork()
+      const handler = () => {
+        if (this.socketsReady.length < count) return
+        this.emitter.off('socketReady', handler)
+        this.uncork()
+      }
+      this.emitter.on('socketReady', handler)
     }
 
-    public async uncork () {
+    public uncork () {
       if (!this.corked) return
-      this.corked = false
+      this.corked = false // must be sync
 
       setImmediate(() => {
         this.socketsReady.forEach(socket => socket.uncorkLast())

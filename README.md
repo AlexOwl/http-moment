@@ -36,7 +36,7 @@ for (let i = 0; i < 5; ++i)
 
 agent.cork(2);
 request("https://example.com", { agent }, console.log);
-request.post("https://example.com", { agent, body: "hi" }, console.log);
+request.post("https://example.com/hello", { agent, body: "hi" }, console.log);
 ```
 
 # ⏲ Http(s)Agent
@@ -53,10 +53,10 @@ cork(count: Number = 0): Promise
 
 ```ts
 /* Usage example */
-await agent.cork();
-await agent.cork(0); /* resolve immediately */
+agent.cork();
+agent.cork(0);
 
-await agent.cork(5); /* auto uncork after 5 requests */
+agent.cork(5); /* auto uncork after 5 requests */
 ```
 
 ### uncork
@@ -69,11 +69,11 @@ It's better to provide specific `count` instead of manual use this method
 
 ```ts
 /* Usage example  */
-await agent.cork();
+agent.cork();
 request("https://example.com", { agent }, console.log);
 request("https://example.com/hello", { agent }, console.log);
 
-// a̶w̶a̶i̶t̶ ̶a̶g̶e̶n̶t̶.̶u̶n̶c̶o̶r̶k̶(̶) - you can't use uncork immediately
+// agent.uncork() - you can't use uncork immediately
 
 setTimeout(() => agent.uncork(), 3000);
 ```
